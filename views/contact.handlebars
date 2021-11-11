@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="send"  className="form">
+        <div className="form_inner">
+
+            <h1>form</h1>
+            <div className="radio_section">
+
+                <p className="radio_section-sub-title">What type of insurance cover do you need?</p>
+                <div className="radio_section-sub-section">
+                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="Cover for my liability"/><p>Cover for my liability</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="Cover for my plant and equipment"/><p>Cover for my plant and equipment</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="radio_3"/><p>Both</p></div>
+                </div>
+
+                <p className="radio_section-sub-title">How long is your insurance for?</p>
+                <div className="radio_section-sub-section">
+                    <div className="radio_section-radio"><input type="radio" name="radio_2" id="radio_4"/><p>Temporary cover for hired in plant</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="radio_2" id="radio_5"/><p>Annual cover</p></div>
+                </div>
+
+                <p className="radio_section-sub-title">Is your equipment owned or hired?</p>
+                <div className="radio_section-sub-section">
+                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_6"/><p>I'm hiring it</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_7"/><p>I own it</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_8"/><p>A mixture of owned and hire equipment</p></div>
+                </div>
+            </div>
+            
+            <div className="form_section">
+                <p className="form_section-sub-title">What is your name</p>
+                <div className="form-control">
+                    <select name="Title" id="sel_1">
+                        <option>Title</option>
+                        <option name="Mr">Mr</option>
+                        <option name="Mrs">Mrs</option>
+                        <option name="Miss">Miss</option>
+                        <option name="Ms">Ms</option>
+                    </select>
+
+                    <input type="text" name="firstname" id="fn" placeholder="first Name" />
+                    <input type="text" name="surname" id="ln" placeholder="surname" />
+                </div>
+            </div>
+
+            <div className="form_section">
+                <p className="form_section-sub-title">What are your contact details?</p>
+                <div className="form-control">
+                    <input type="text" name="email_address" id="email" placeholder="email address" />
+                    <input type="text" name="telephone_number" id="telno" placeholder="telephone number" />
+                </div>
+            </div>
+
+            <div className="radio_section">
+                <p className="radio_section-sub-title">What is your business structure?</p>
+                <div className="radio_section-sub-section">
+                    <div className="radio_section-radio"><input type="radio" name="Sole_trader" id="radio_9"/><p>Sole trader</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="Partnership" id="radio_10"/><p>Partnership</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="Limited_company" id="radio_11"/><p>Limited company</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="Private_individual" id="radio_12"/><p>Private individual</p></div>
+                </div>
+            </div>
+
+            <div className="form_section">
+                <p className="form_section-sub-title">Business details?</p>
+                <div className="form-control">
+                    <input type="text" name="business_name" id="bus_name" placeholder="business name" />
+                    <input type="text" name="postcode" id="postcode" placeholder="postcode" />
+                    <input type="text" name="turnover" id="turnover" placeholder="annual turnover (£)" />
+                    <input type="text" name="owners" id="owners" placeholder="total number of business owners / partners" />
+                    <input type="text" name="employees" id="employees" placeholder="manual employees / labour-only sub-contractors" />
+                    <input type="text" name="employees_2" id="employees_2" placeholder="how many employees" />
+                </div>
+            </div>
+            <div className="radio_section">
+                <p className="radio_section-sub-title">Does this Public Liability insurance need to cover yourself only?</p>
+                <div className="radio_section-sub-section">
+                    <div className="radio_section-radio"><input type="radio" name="Yes" id="radio_13"/><p>Yes</p></div>
+                    <div className="radio_section-radio"><input type="radio" name="No" id="radio_14"/><p>No</p></div>
+                </div>
+            </div>
+
+
+            <button type="submit">Submit</button>
+            {{ msg }}
+        </div>
+    </form>
+
+    </body>
+</html>
