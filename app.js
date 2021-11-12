@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const cred = require('./credentials');
 
 const app = express();
 
@@ -47,28 +48,28 @@ app.post('/send', (req, res) => {
 
         // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "iron.cloudhosting.co.uk",
-        port: 587,
+        host: cred.credentials.host,
+        port: cred.credentials.port,
         secure: false, // true for 465, false for other ports
         auth: {
-        user: 'quote@plant-insurance.com', // generated ethereal user
-        pass: 'cj,)JDqY^nfS', // generated ethereal password
+        user: cred.credentials.user, // generated ethereal user
+        pass: cred.credentials.pass, // generated ethereal password
         },
         tls: {
             rejectUnauthorized:false
         }, 
         dkim: {
-            domainName: "plant-insurance.com", 
-            keySelector: "default", 
-            privateKey: "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr2fR+8xKVl2Z6mRj+waSK55kTL4C8YijPi5yxXtQ9Lqo5PSjf3avl+c9ORWg1sFOlgBNnLgjyk2unKs6caADyQPgFEN6zAYdsyvp06hR2Ony39/WS19oGNQokohO4AObzAuFTMTocHdUlsFeh6Tn51JSOeS7bs75pggFcFE27BZDpDUJeUnzZfcOtZas+vkPgEz2CYZ92zrvxuj17fRXAiQ1847d3XcHTLw+KckSKsluYRxrj14Y2RESdGtv7/vhk4XPIjut2qXH4XdNZriPwxXNfFslM3o7KK3+SGL/9hnf+Y5RC1C+KoWeR6tPQoR3zTMOKHKRpeiCRaF/OoypkwIDAQAB;"
+            domainName: cred.credentials.domainName, 
+            keySelector: cred.credentials.keySelector, 
+            privateKey: cred.credentials.privateKey,
         }
     });
 
     // send mail with defined transport object
    let mailOptions = {
-        from: '"plant-insurance.com" <quote@plant-insurance.com>', // sender address
-        to: "cp-waters@hotmail.co.uk", // list of receivers
-        subject: "New quote request", // Subject line
+        from: cred.credentials.from, // sender address
+        to: cred.credentials.to, // list of receivers
+        subject: cred.credentials.subject, // Subject line
         text: "", // plain text body
         html: output, // html body
     };
