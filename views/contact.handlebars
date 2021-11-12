@@ -1,97 +1,90 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" action="send"  className="form">
-        <div className="form_inner">
-
-            <h1>form</h1>
-            <div className="radio_section">
-
-                <p className="radio_section-sub-title">What type of insurance cover do you need?</p>
-                <div className="radio_section-sub-section">
-                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="Cover for my liability"/><p>Cover for my liability</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="Cover for my plant and equipment"/><p>Cover for my plant and equipment</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="radio_1" id="radio_3"/><p>Both</p></div>
-                </div>
-
-                <p className="radio_section-sub-title">How long is your insurance for?</p>
-                <div className="radio_section-sub-section">
-                    <div className="radio_section-radio"><input type="radio" name="radio_2" id="radio_4"/><p>Temporary cover for hired in plant</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="radio_2" id="radio_5"/><p>Annual cover</p></div>
-                </div>
-
-                <p className="radio_section-sub-title">Is your equipment owned or hired?</p>
-                <div className="radio_section-sub-section">
-                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_6"/><p>I'm hiring it</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_7"/><p>I own it</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="radio_3" id="radio_8"/><p>A mixture of owned and hire equipment</p></div>
-                </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="public/css/styles.css" />
+        <title>Competitive Plant Machinery Insurance | plant-insurance.com</title>
+    </head>
+    <body>
+        <div class="header">
+            <div class="header_inner">
+                <img src="public/logo.png" alt="plant-insurance.co.uk logo"><h1>plant-insurance.com</h1>
             </div>
-            
-            <div className="form_section">
-                <p className="form_section-sub-title">What is your name</p>
-                <div className="form-control">
-                    <select name="Title" id="sel_1">
-                        <option>Title</option>
-                        <option name="Mr">Mr</option>
-                        <option name="Mrs">Mrs</option>
-                        <option name="Miss">Miss</option>
-                        <option name="Ms">Ms</option>
-                    </select>
-
-                    <input type="text" name="firstname" id="fn" placeholder="first Name" />
-                    <input type="text" name="surname" id="ln" placeholder="surname" />
-                </div>
-            </div>
-
-            <div className="form_section">
-                <p className="form_section-sub-title">What are your contact details?</p>
-                <div className="form-control">
-                    <input type="text" name="email_address" id="email" placeholder="email address" />
-                    <input type="text" name="telephone_number" id="telno" placeholder="telephone number" />
-                </div>
-            </div>
-
-            <div className="radio_section">
-                <p className="radio_section-sub-title">What is your business structure?</p>
-                <div className="radio_section-sub-section">
-                    <div className="radio_section-radio"><input type="radio" name="Sole_trader" id="radio_9"/><p>Sole trader</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="Partnership" id="radio_10"/><p>Partnership</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="Limited_company" id="radio_11"/><p>Limited company</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="Private_individual" id="radio_12"/><p>Private individual</p></div>
-                </div>
-            </div>
-
-            <div className="form_section">
-                <p className="form_section-sub-title">Business details?</p>
-                <div className="form-control">
-                    <input type="text" name="business_name" id="bus_name" placeholder="business name" />
-                    <input type="text" name="postcode" id="postcode" placeholder="postcode" />
-                    <input type="text" name="turnover" id="turnover" placeholder="annual turnover (£)" />
-                    <input type="text" name="owners" id="owners" placeholder="total number of business owners / partners" />
-                    <input type="text" name="employees" id="employees" placeholder="manual employees / labour-only sub-contractors" />
-                    <input type="text" name="employees_2" id="employees_2" placeholder="how many employees" />
-                </div>
-            </div>
-            <div className="radio_section">
-                <p className="radio_section-sub-title">Does this Public Liability insurance need to cover yourself only?</p>
-                <div className="radio_section-sub-section">
-                    <div className="radio_section-radio"><input type="radio" name="Yes" id="radio_13"/><p>Yes</p></div>
-                    <div className="radio_section-radio"><input type="radio" name="No" id="radio_14"/><p>No</p></div>
-                </div>
-            </div>
-
-
-            <button type="submit">Submit</button>
-            {{ msg }}
         </div>
-    </form>
-
+        <form method="POST" action="send"  class="form">
+            <div class="form_inner">
+                <h1>Enquiry</h1>
+                <p>Please complete the form below to receive a competitive quote for plant insurance.</p>
+                <p class="up"><em>Please Note:</em> fields marked <span class="inline">*</span> below are mandatory and must be completed.</p>
+                <div class="form_section">
+                    <p class="form_section-sub-title">Please enter your details below </p>
+                    <div class="form-control">
+                        <div class="form-control_input">
+                            <input type="text" name="name" id="name" placeholder="Your Name" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="company" id="company" placeholder="Company" />
+                        </div>
+                        <div class="form-control_input">
+                            <input type="tel" name="telno" id="telno" placeholder="Telephone Number" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="email" id="email" placeholder="Email" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="houseNameNumber" id="houseNameNumber" placeholder="Building/House number/name" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="address_1" id="address_1" placeholder="Address 1" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="address_2" id="address_2" placeholder="Address 2" />
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="town" id="town" placeholder="Town" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="city" id="city" placeholder="City" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="postcode" id="postcode" placeholder="Postcode" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="type" id="type" placeholder="Type of Insurance" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="renewal_date" id="renewal_date" placeholder="Renewal Date (if applicable)" />
+                        </div>
+                        <div class="form-control_input">
+                            <input type="textarea" name="message" id="message" placeholder="Other Information" />
+                        </div>
+                    </div>
+                </div>
+                <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdufyodAAAAAJDM0CTuCJHnpzjrecKyyF3xOfCV"></script>
+                <script>
+                grecaptcha.enterprise.ready(function() {
+                    grecaptcha.enterprise.execute('6LdufyodAAAAAJDM0CTuCJHnpzjrecKyyF3xOfCV', {action: 'login'}).then(function(token) {
+                    ...
+                    });
+                });
+                </script>
+                <button type="submit">Submit</button>
+                {{ msg }}
+            </div>
+        </form>
+        <div class="footer">
+            <div class="footer_inner">
+                <h3>plant-insurance.com</h3>
+                <p>Address 1, Address 2, Town, City</br>
+                Vat No: 12456<br>
+                Tel: <a href="">01234 567 890</a></p>
+            </div>
+            <hr>
+            <div class="sub-footer">
+                <p>© <script>const d = new Date(); document.write(d.getFullYear().toString())</script> <a href="">WEBDIGITAL WORKS</a> | <a href="">NVWeb</a></p>
+            </div>
+        </div>
     </body>
 </html>
