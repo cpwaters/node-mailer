@@ -4,28 +4,76 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/splide/css/splide.min.css">
         <link rel="stylesheet" href="public/css/styles.css" />
-        <title>Competitive Plant Machinery Insurance | plant-insurance.com</title>
+        <title>New &amp; Used Rubber Track Sales | Rubber Track Quote</title>
     </head>
     <body>
         <div class="header">
             <div class="header_inner">
-                <img src="public/logo.png" alt="plant-insurance.co.uk logo"><h1>plant-insurance.com</h1>
+                <img src="public/rtqLogo.png" alt="rubber track quote logo">
             </div>
         </div>
-        <form method="POST" action="send"  class="form">
-            <div class="form_inner">
-                <h1>Enquiry</h1>
-                <p>Please complete the form below to receive a competitive quote for plant insurance.</p>
+        <div class="form_inner">
+        
+                <h1>Get Your FREE Rubber Track Quote NOW!</h1>
+                <p>Looking for a good deal on excavator tracks? Look no further, 
+                    simply complete the form below to recieve a free, no obligation quote from our dealers.</p>
+                <div class="img_block">
+                    <img src="../public/g1.jpg" alt="rubber tracks">
+                    <img src="../public/g2.jpg" alt="rubber tracks pile">
+                    <img src="../public/g3.jpg" alt="rubber tracks on tank">
+                </div>
+                <div class="splide">
+                    <div class="splide__track">
+                            <div class="splide__list">
+                                <div class="splide__slide"><img src="../public/g1.jpg" alt="rubber tracks"></div>
+                                <div class="splide__slide"><img src="../public/g2.jpg" alt="rubber tracks pile"></div>
+                                <div class="splide__slide"><img src="../public/g3.jpg" alt="rubber tracks on tank"></div>
+                            </div>
+                    </div>
+                </div>
+                <p>There is no cost whatsoever to use our service to purchase your machinery and we offer these addiotnal benefits:</p>
+                <ul class="list">
+                    <li>Save Money: Our Dealer Network offers some of the best prices on the internet.</li>
+                    <li>Save Time: We do all the searches and our suppliers contact you with their quotes.</li>
+                    <li>Competitive: We compare quotes from many dealers to obtain the best price for you.</li>
+                    <li>Without Obligation: There is no obligation to buy, and no high pressure sales.</li>
+                </ul>
+                <p><em>To request a quote, simply fill out the form below and we will be in touch shortly with our price.</em></p>
+                <h2 id="second-start">Request A Quote</h2>
                 <p class="up"><em>Please Note:</em> fields marked <span class="inline">*</span> below are mandatory and must be completed.</p>
+                </div>
+        <form method="POST" action="#second-start" enctype="multipart/form-data" class="form">
+        <p style="margin:0 auto;max-width:60%;" class="form_section-sub-title">Please enter your details below </p>
+            <div class="form_inner">
+                <div class="form-control_input">
+                    <input style="color:#000;" type="file" name="upload" id="upload" placeholder="upload" accept="image/png, image/jpeg"/>
+                </div>
+                <button type="submit">Upload</button>
+                <p style="color:red;">Please note: Only one (1) image can be uploaded. Thanks</p>
+                <h4 style="color:lightgreen;">{{ msg }}</h4>
+            </div>
+        </form>
+        <form method="POST" action="send" class="form">
+            <div class="form_inner">
                 <div class="form_section">
-                    <p class="form_section-sub-title">Please enter your details below </p>
+                    
                     <div class="form-control">
-                        <div class="form-control_input">
+                        <!--<div class="form-control_input">
                             <input type="text" name="name" id="name" placeholder="Your Name" required/><span>*</span>
                         </div>
                         <div class="form-control_input">
                             <input type="text" name="company" id="company" placeholder="Company" />
+                        </div>-->
+                        <div class="form-control_input">
+                            <input type="text" name="make" id="make" placeholder="Make" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="model" id="model" placeholder="Model" required/><span>*</span>
+                        </div>
+                        <div class="form-control_input">
+                            <input type="text" name="mileage" id="mileage" placeholder="Mileage" required/><span>*</span>
                         </div>
                         <div class="form-control_input">
                             <input type="tel" name="telno" id="telno" placeholder="Telephone Number" required/><span>*</span>
@@ -33,7 +81,7 @@
                         <div class="form-control_input">
                             <input type="text" name="email" id="email" placeholder="Email" required/><span>*</span>
                         </div>
-                        <div class="form-control_input">
+                        <!--<div class="form-control_input">
                             <input type="text" name="houseNameNumber" id="houseNameNumber" placeholder="Building/House number/name" required/><span>*</span>
                         </div>
                         <div class="form-control_input">
@@ -59,32 +107,39 @@
                         </div>
                         <div class="form-control_input">
                             <input type="textarea" name="message" id="message" placeholder="Other Information" />
-                        </div>
+                        </div>-->
+                        {{!-- <div class="form-control_input">
+                            <input style="color:#000;" type="file" name="upload" id="upload" placeholder="upload" accept="image/png, image/jpeg"/>
+                        </div> --}}
+                        
+                        {{ message }}
                     </div>
                 </div>
                 <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdufyodAAAAAJDM0CTuCJHnpzjrecKyyF3xOfCV"></script>
                 <script>
                 grecaptcha.enterprise.ready(function() {
-                    grecaptcha.enterprise.execute('6LdufyodAAAAAJDM0CTuCJHnpzjrecKyyF3xOfCV', {action: 'login'}).then(function(token) {
-                    ...
-                    });
+                    grecaptcha.enterprise.execute('6LdufyodAAAAAJDM0CTuCJHnpzjrecKyyF3xOfCV', {action: 'login'}).then(function(token) {...}),
                 });
                 </script>
                 <button type="submit">Submit</button>
-                {{ msg }}
             </div>
         </form>
+
+        
         <div class="footer">
-            <div class="footer_inner">
-                <h3>plant-insurance.com</h3>
-                <p>Address 1, Address 2, Town, City</br>
-                Vat No: 12456<br>
-                Tel: <a href="">01234 567 890</a></p>
-            </div>
-            <hr>
             <div class="sub-footer">
                 <p>© <script>const d = new Date(); document.write(d.getFullYear().toString())</script> <a href="">WEBDIGITAL WORKS</a> | <a href="">NVWeb</a></p>
             </div>
         </div>
+        <script src="/splide/js/splide.min.js"></script>
+        <script>
+            const splide = new Splide( '.splide', {
+                type      : 'loop',
+                perPage   : 1,
+                direction : 'ltr',
+                padding   : 0,
+            } );
+            splide.mount();
+        </script>
     </body>
 </html>

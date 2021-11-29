@@ -4,6 +4,9 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const cred = require('./credentials');
+const multer = require('multer');
+const fs = require('fs');
+
 
 const app = express();
 
@@ -17,6 +20,7 @@ app.use(bodyParser.json());
 
 // static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/splide', express.static(__dirname+"/node_modules/@splidejs/splide/dist"))
 
 app.locals.layout = false;
 // use contact.handlebars page
@@ -24,26 +28,67 @@ app.get("/", (req, res) =>{
     res.render('contact', { layout:false })
 });
 
+// MULTER
+const storage = multer.diskStorage({
+    destination: './upload',
+    filename: function(req, file, cb){
+        cb(null, file.fieldname = 'image' + path.extname(file.originalname));
+    }
+});
+
+// init upload
+const upload = multer({
+    storage: storage, 
+    limits: {fileSize:10000000}, // 10million bytes 10MB
+    fileFilter: function(req, file, cb){
+        checkFileType(file,cb)
+    }
+}).single('upload');
+
+// check file and mime type
+function checkFileType(file, cb){
+    const filetypes = /jpeg|jpg|png|gif/;
+    const extention = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extention){
+        return cb(null, true);
+    }else {
+        cb('error images only')
+    }
+}
+
+app.post('/', (req, res) => {
+    upload(req, res, (err) => {
+        if(err){
+            res.render({ message: err });
+        }else{
+            if(req.file == undefined){
+                res.render({ message: 'No file selected'});
+            }else{
+                res.render('contact', {
+                    msg: `${req.file.filename} Uploaded, Please continue`,
+                    file: `upload/${req.file.filename}`
+                })
+            }
+        }
+    })
+})
+
+app.use('/upload', express.static('upload'))
+
 app.post('/send', (req, res) => {
     const output = `
     <p>You have a new quote request</p>
     <h3>Contact Details</h3>
-    <p>Name: ${req.body.name}<br>
-       Email: ${req.body.email}<br>
-       Tel: ${req.body.telno}<p>
-    <h3>Insurance Required</h3>
-    <p>Type of insurance required: ${req.body.type}<br>
-       Renewal Date: ${req.body.renewal_date === undefined ? 'Not entered' : req.body.renewal_date}</p>
-    <h3>Business Details</h3>
-    <p>Company: ${req.body.company === undefined ? 'Not given' : req.body.company}<br>
-       Address: ${req.body.houseNameNumber} ${req.body.address_1}<br>
-                ${req.body.address_2 === '' ? req.body.town : req.body.address_2}<br>
-                ${req.body.town}<br>
-                ${req.body.city}<br>
-                ${req.body.postcode}<br>
-    </p>
-    <h3>Other Information</h3>
-    <p>${req.body.message === undefined ? 'None' : req.body.message}</p>
+    <p> Email: ${req.body.email}<br>
+        Tel: ${req.body.telno}<p>
+    <h3>Truck Details</h3>
+    <p> Make: ${req.body.make}<br>
+        Model: ${req.body.model}<br>
+        Mileage: ${req.body.mileage}</p>
+    <div><img src="cid:batman"/></div>
+    
     `;
 
         // create reusable transporter object using the default SMTP transport
@@ -65,6 +110,17 @@ app.post('/send', (req, res) => {
         }
     });
 
+    const getImage = () => {
+        try { 
+            const files = fs.readdirSync('./upload');
+            console.log(files[0]);
+            return files[0];
+        } catch (err){
+            console.error(err);
+        }
+    }
+    const isFile = getImage()
+    
     // send mail with defined transport object
    let mailOptions = {
         from: cred.credentials.from, // sender address
@@ -72,18 +128,39 @@ app.post('/send', (req, res) => {
         subject: cred.credentials.subject, // Subject line
         text: "", // plain text body
         html: output, // html body
+        attachments: [{
+            filename: isFile,
+             path: `./upload/${isFile}`,
+            cid: 'batman' //same cid value as in the html img src
+        }]
     };
 
+    // sending here and killing images
     transporter.sendMail(mailOptions, (error, info) => {
         if(error){
             return console.log(error);
         }
         console.log('Message sent: %s', info.messageId);
         console.log('Preview url: %s', nodemailer.getTestMessageUrl(info));
-
         res.render('send', {msg: 'Your enquiry has been sent'})
 
+        const directory = './upload';
+        fs.readdir(directory, (err, files) => {
+            if(files != null){
+                for (const file of files) {
+                    fs.unlink(path.join(directory, file), err => {
+                        if(err) throw err;
+                    });
+                }
+            }else{
+                null
+            }   
+        });
+
     });
+
+    
+    
 });
 
 app.listen(3050, () => console.log('server started...'));
