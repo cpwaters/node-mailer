@@ -8,9 +8,9 @@ const cred = require('./credentials');
 const multer = require('multer');
 const fs = require('fs');
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken);
+//const accountSid = process.env.TWILIO_ACCOUNT_SID;
+//const authToken = process.env.TWILIO_AUTH_TOKEN;
+//const client = require('twilio')(accountSid, authToken);
 
 
 const app = express();
@@ -33,11 +33,13 @@ app.get("/", (req, res) =>{
     res.render('contact', { layout:false })
 });
 
+let num = 1;
+
 // MULTER
 const storage = multer.diskStorage({
     destination: './upload',
     filename: function(req, file, cb){
-        cb(null, file.fieldname = 'image' + path.extname(file.originalname));
+        cb(null, file.fieldname = 'image'+ num++ + path.extname(file.originalname));
     }
 });
 
@@ -68,14 +70,9 @@ app.post('/', (req, res) => {
         if(err){
             res.render({ message: err });
         }else{
-            if(req.file == undefined){
-                res.render({ message: 'No file selected'});
-            }else{
-                res.render('contact', {
-                    msg: `${req.file.filename} Uploaded, Please continue`,
-                    file: `upload/${req.file.filename}`
-                })
-            }
+            res.render('contact', {
+                msg: 'Uploaded, Please continue'
+            })
         }
     })
 })
@@ -92,9 +89,13 @@ app.post('/send', (req, res) => {
     <p> Make: ${req.body.make}<br>
         Model: ${req.body.model}<br>
         Mileage: ${req.body.mileage}</p>
-    <div><img src="cid:batman"/></div>
+    <div><img src="cid:M1"/></div>
+    <div><img src="cid:M2"/></div>
+    <div><img src="cid:M3"/></div>
+    <div><img src="cid:M4"/></div>
+    <div><img src="cid:M5"/></div>
     `;
-
+/*
     const WhatsappOutput = `
     You have a new quote request
     Contact Details:
@@ -105,7 +106,7 @@ app.post('/send', (req, res) => {
     Model: ${req.body.model}
     Mileage: ${req.body.mileage}
     `;
-
+*/
         // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: cred.credentials.host,
@@ -125,32 +126,47 @@ app.post('/send', (req, res) => {
         }
     });
 
-    const getImage = () => {
+    const getImages = () => {
         try { 
             const files = fs.readdirSync('./upload');
-            console.log(files[0]);
-            return files[0];
+            console.error(files);
+            return files;
         } catch (err){
             console.error(err);
         }
     }
-    const isFile = getImage()
-    
+
+    const isFile = getImages()
+    console.error(isFile)
+    /*
     // send mail with defined transport object
-   let mailOptions = {
+    let mailOptions = {
         from: cred.credentials.from, // sender address
         to: cred.credentials.to, // list of receivers
         subject: cred.credentials.subject, // Subject line
         text: "", // plain text body
         html: output, // html body
         attachments: [{
-            filename: isFile,
-             path: `./upload/${isFile}`,
-            cid: 'batman' //same cid value as in the html img src
+            filename: image1.,
+            path: `./upload/image1,
+            cid: 'M1',  
+            filename: image2.,
+            path: `./upload/image2`,
+            cid: 'M2',  
+            filename: image3.,
+            path: `./upload/image3`,
+            cid: 'M3',
+            filename: image4.,
+            path: `./upload/image4`,
+            cid: 'M4',
+            filename: image5.,
+            path: `./upload/image5`,
+            cid: 'M5',                  
         }]
     };
 
     // sending here and killing images
+
     transporter.sendMail(mailOptions, (error, info) => {
         if(error){
             return console.log(error);
@@ -159,6 +175,8 @@ app.post('/send', (req, res) => {
         console.log('Preview url: %s', nodemailer.getTestMessageUrl(info));
         res.render('send', {msg: 'Your enquiry has been sent'})
 
+        // whatsapp twilio
+        /*
         client.messages
         .create({
             from: 'whatsapp:+14155238886',
@@ -167,7 +185,11 @@ app.post('/send', (req, res) => {
             to: 'whatsapp:+447496980896'
         })
         .then(message => console.error(message.sid));
+        */
 
+        /*
+
+        //setTimeout here
         const directory = './upload';
         fs.readdir(directory, (err, files) => {
             if(files != null){
@@ -180,9 +202,10 @@ app.post('/send', (req, res) => {
                 null
             }   
         });
+        
 
     });
-    
+    */
 });
 
 app.listen(3050, () => console.log('server started...'));

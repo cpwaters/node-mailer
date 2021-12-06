@@ -47,10 +47,12 @@
         <form method="POST" action="#second-start" enctype="multipart/form-data" class="form">
         <p style="margin:0 auto;max-width:60%;" class="form_section-sub-title">Please enter your details below </p>
             <div class="form_inner">
-                <div class="form-control_input">
-                    <input style="color:#000;" type="file" name="upload" id="upload" placeholder="upload" accept="image/png, image/jpeg"/>
+                <div class="form-control_input-file">
+
+                    <input style="color:#000;" type="file" name="upload" id="upload" placeholder="upload" accept="image/png, image/jpeg" multiple/>
+                    <button class="uploader" type="submit">Upload</button>
                 </div>
-                <button type="submit">Upload</button>
+                
                 <p style="color:red;">Please note: Only one (1) image can be uploaded. Thanks</p>
                 <h4 style="color:lightgreen;">{{ msg }}</h4>
             </div>
@@ -108,9 +110,9 @@
                         <div class="form-control_input">
                             <input type="textarea" name="message" id="message" placeholder="Other Information" />
                         </div>-->
-                        <div class="form-control_input">
+                        {{!-- <div class="form-control_input">
                             <input style="color:#000;" type="file" name="upload" id="upload" placeholder="upload" accept="image/png, image/jpeg" multiple>
-                        </div>
+                        </div> --}}
                         
                         {{ message }}
                     </div>

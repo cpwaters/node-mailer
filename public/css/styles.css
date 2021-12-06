@@ -64,6 +64,15 @@ body {
     margin: 0.5em 0;
     background:#fff;
 }
+
+.form-control_input-file {
+    display:flex;
+    border: 1px solid #ddd;
+    margin: 0.5em 0;
+    background:#fff;
+    justify-content: space-between;
+}
+
 input[type="text"], 
 input[type="tel"], 
 input[type="textarea"] {
@@ -89,6 +98,17 @@ button {
     font-size: 18px;
 }
 button:hover {
+    background:#000;
+    color:#fff;
+}
+button.uploader {
+    width:50%;
+    height:56px;
+    border: none;
+    background:#5995f9;
+    font-size: 18px;
+}
+button.uploader:hover {
     background:#000;
     color:#fff;
 }
