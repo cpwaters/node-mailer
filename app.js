@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
@@ -6,6 +7,10 @@ const nodemailer = require('nodemailer');
 const cred = require('./credentials');
 const multer = require('multer');
 const fs = require('fs');
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
 
 const app = express();
@@ -43,7 +48,7 @@ const upload = multer({
     fileFilter: function(req, file, cb){
         checkFileType(file,cb)
     }
-}).single('upload');
+}).array('upload');
 
 // check file and mime type
 function checkFileType(file, cb){
@@ -88,7 +93,17 @@ app.post('/send', (req, res) => {
         Model: ${req.body.model}<br>
         Mileage: ${req.body.mileage}</p>
     <div><img src="cid:batman"/></div>
-    
+    `;
+
+    const WhatsappOutput = `
+    You have a new quote request
+    Contact Details:
+    Email: ${req.body.email}
+    Tel: ${req.body.telno}
+    Truck Details:
+    Make: ${req.body.make}
+    Model: ${req.body.model}
+    Mileage: ${req.body.mileage}
     `;
 
         // create reusable transporter object using the default SMTP transport
@@ -144,6 +159,15 @@ app.post('/send', (req, res) => {
         console.log('Preview url: %s', nodemailer.getTestMessageUrl(info));
         res.render('send', {msg: 'Your enquiry has been sent'})
 
+        client.messages
+        .create({
+            from: 'whatsapp:+14155238886',
+            body: WhatsappOutput,
+            mediaUrl: [`http://localhost:3050/upload/${isFile}`],
+            to: 'whatsapp:+447496980896'
+        })
+        .then(message => console.error(message.sid));
+
         const directory = './upload';
         fs.readdir(directory, (err, files) => {
             if(files != null){
@@ -158,8 +182,6 @@ app.post('/send', (req, res) => {
         });
 
     });
-
-    
     
 });
 
