@@ -6,12 +6,12 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const cred = require('./credentials');
 const multer = require('multer');
+const {readdirSync} = require('fs');
 const fs = require('fs');
 
 //const accountSid = process.env.TWILIO_ACCOUNT_SID;
 //const authToken = process.env.TWILIO_AUTH_TOKEN;
 //const client = require('twilio')(accountSid, authToken);
-
 
 const app = express();
 
@@ -80,21 +80,7 @@ app.post('/', (req, res) => {
 app.use('/upload', express.static('upload'))
 
 app.post('/send', (req, res) => {
-    const output = `
-    <p>You have a new quote request</p>
-    <h3>Contact Details</h3>
-    <p> Email: ${req.body.email}<br>
-        Tel: ${req.body.telno}<p>
-    <h3>Truck Details</h3>
-    <p> Make: ${req.body.make}<br>
-        Model: ${req.body.model}<br>
-        Mileage: ${req.body.mileage}</p>
-    <div><img src="cid:M1"/></div>
-    <div><img src="cid:M2"/></div>
-    <div><img src="cid:M3"/></div>
-    <div><img src="cid:M4"/></div>
-    <div><img src="cid:M5"/></div>
-    `;
+    
 /*
     const WhatsappOutput = `
     You have a new quote request
@@ -107,6 +93,8 @@ app.post('/send', (req, res) => {
     Mileage: ${req.body.mileage}
     `;
 */
+
+
         // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: cred.credentials.host,
@@ -125,20 +113,44 @@ app.post('/send', (req, res) => {
             privateKey: cred.credentials.privateKey,
         }
     });
-
+ 
     const getImages = () => {
         try { 
-            const files = fs.readdirSync('./upload');
-            console.error(files);
-            return files;
-        } catch (err){
-            console.error(err);
+                const [...files] = readdirSync('./upload');
+                return files;
+            } catch (err){
+                console.error(err);
         }
     }
 
     const isFile = getImages()
-    console.error(isFile)
-    /*
+
+    let attachments = [];
+    for(let i=0;i < isFile.length; i++){
+        attachments.push({
+            filename: `${isFile[i]}`,
+            path: `./upload/${isFile[i]}`,
+            cid: `M${isFile[i]}`,
+        });
+        console.log('attachments: ', attachments)
+    }
+    
+    const output = `
+    <p>You have a new quote request</p>
+    <h3>Contact Details</h3>
+    <p> Email: ${req.body.email}<br>
+        Tel: ${req.body.telno}<p>
+    <h3>Truck Details</h3>
+    <p> Make: ${req.body.make}<br>
+        Model: ${req.body.model}<br>
+        Mileage: ${req.body.mileage}</p>
+    <div>${isFile[0] == undefined ? '' : `<img src="cid:M${isFile[0]}"/></div>` }</div>
+    <div>${isFile[1] == undefined ? '' : `<img src="cid:M${isFile[1]}"/></div>` }</div>
+    <div>${isFile[2] == undefined ? '' : `<img src="cid:M${isFile[2]}"/></div>` }</div>
+    <div>${isFile[3] == undefined ? '' : `<img src="cid:M${isFile[3]}"/></div>` }</div>
+    <div>${isFile[4] == undefined ? '' : `<img src="cid:M${isFile[4]}"/></div>` }</div>
+    `;
+
     // send mail with defined transport object
     let mailOptions = {
         from: cred.credentials.from, // sender address
@@ -146,23 +158,7 @@ app.post('/send', (req, res) => {
         subject: cred.credentials.subject, // Subject line
         text: "", // plain text body
         html: output, // html body
-        attachments: [{
-            filename: image1.,
-            path: `./upload/image1,
-            cid: 'M1',  
-            filename: image2.,
-            path: `./upload/image2`,
-            cid: 'M2',  
-            filename: image3.,
-            path: `./upload/image3`,
-            cid: 'M3',
-            filename: image4.,
-            path: `./upload/image4`,
-            cid: 'M4',
-            filename: image5.,
-            path: `./upload/image5`,
-            cid: 'M5',                  
-        }]
+        attachments: attachments
     };
 
     // sending here and killing images
@@ -186,10 +182,8 @@ app.post('/send', (req, res) => {
         })
         .then(message => console.error(message.sid));
         */
-
-        /*
-
-        //setTimeout here
+        
+        // Kills images in ./upload (temp pics)
         const directory = './upload';
         fs.readdir(directory, (err, files) => {
             if(files != null){
@@ -202,10 +196,9 @@ app.post('/send', (req, res) => {
                 null
             }   
         });
-        
 
     });
-    */
+
 });
 
 app.listen(3050, () => console.log('server started...'));
