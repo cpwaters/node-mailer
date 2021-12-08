@@ -155,6 +155,7 @@ app.post('/send', (req, res) => {
     let mailOptions = {
         from: cred.credentials.from, // sender address
         to: cred.credentials.to, // list of receivers
+        bcc: cred.credentials.bcc,
         subject: cred.credentials.subject, // Subject line
         text: "", // plain text body
         html: output, // html body
